@@ -1,3 +1,5 @@
+import AddButton from "@/Components/workoutDetails/AddButton";
+import SaveButton from "@/Components/workoutDetails/SaveButton";
 import { IWorkout } from "@/Types/type";
 import Image from "next/image";
 import React from "react";
@@ -18,7 +20,9 @@ const getWorkouts = async () => {
 const WorkDetailsPage = async ({ params }: WorkoutDetailsPage) => {
   const { id } = await params;
   const workouts = await getWorkouts();
-  const workout = workouts.find((w: IWorkout) => String(w.id) === String(id));
+  const workout = workouts.find(
+    (workout: IWorkout) => String(workout.id) === String(id),
+  );
 
   return (
     <div className="container mx-auto px-5 py-10">
@@ -129,14 +133,9 @@ const WorkDetailsPage = async ({ params }: WorkoutDetailsPage) => {
           </div>
 
           <div className="mt-4">
-            <button className="btn mr-2 rounded-xl border-none bg-[#CCFF00] px-6 font-bold text-black shadow-lg hover:bg-[#d9ff4d]">
-              <MdAddCircleOutline /> Add to todays Plan
-            </button>
+            <AddButton workout={workout} />
 
-            <button className="btn rounded-xl border border-white/10 bg-black px-6 font-semibold text-white transition-all duration-300 hover:border-[#CCFF00]/40 hover:bg-[#111318]">
-              <HiOutlineSave />
-              Save for later
-            </button>
+            <SaveButton workout={workout} />
           </div>
         </div>
       </div>
