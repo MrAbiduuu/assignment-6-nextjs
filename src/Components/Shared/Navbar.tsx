@@ -12,7 +12,7 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden gap-8 md:flex">
-          <Link href="/Workouts" className="text-zinc-400 hover:text-white">
+          <Link href="/" className="text-zinc-400 hover:text-white">
             Workouts
           </Link>
 

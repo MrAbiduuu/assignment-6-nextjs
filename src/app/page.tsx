@@ -1,3 +1,9 @@
+import Workouts from "@/Components/homepage/Workouts";
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <Workouts />
+    </div>
+  );
 }
