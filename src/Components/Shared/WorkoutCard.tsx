@@ -1,5 +1,6 @@
 import { IWorkout } from "@/Types/type";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 interface WorkoutCardProps {
   workout: IWorkout;
@@ -36,10 +37,6 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
           </span>
 
           <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-gray-300">
-            🔥 {workout.caloriesBurned} kcal
-          </span>
-
-          <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-gray-300">
             🏋️ {workout.sets} sets
           </span>
 
@@ -57,6 +54,14 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
               {muscle}
             </span>
           ))}
+        </div>
+        <hr className="my-4 border-gray-600" />
+        <div className="flex justify-center">
+          <Link href={`/Workouts/${workout.id}`}>
+            <button className="flex justify-center mt-5 btn-wide rounded-xl bg-black hover:bg-gray-700 text-white py-4 px-4 transition-colors duration-300">
+              View Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>
