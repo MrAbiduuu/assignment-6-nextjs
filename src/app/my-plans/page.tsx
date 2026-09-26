@@ -15,13 +15,17 @@ import { MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const MyPlansPage = () => {
-  const { AddWorkouts = [], SavedWorkouts = [] } = (useContext(
-    WorkoutContext,
-  ) ?? {}) as {
+  const {
+    AddWorkouts = [],
+    SavedWorkouts = [],
+    setAddWorkouts: setContextAddWorkouts,
+    setSavedWorkouts: setContextSavedWorkouts,
+  } = (useContext(WorkoutContext) ?? {}) as {
     AddWorkouts?: IWorkout[];
     SavedWorkouts?: IWorkout[];
+    setAddWorkouts: React.Dispatch<React.SetStateAction<IWorkout[]>>;
+    setSavedWorkouts: React.Dispatch<React.SetStateAction<IWorkout[]>>;
   };
-
   const [activeTab, setActiveTab] = useState("today");
   const [sortBy, setSortBy] = useState("default");
 
@@ -70,8 +74,16 @@ const MyPlansPage = () => {
 
     if (type === "today") {
       setTodayWorkouts((prev) => prev.filter((workout) => workout.id !== id));
+
+      setContextAddWorkouts((prev) =>
+        prev.filter((workout) => workout.id !== id),
+      );
     } else {
       setSavedWorkouts((prev) => prev.filter((workout) => workout.id !== id));
+
+      setContextSavedWorkouts((prev) =>
+        prev.filter((workout) => workout.id !== id),
+      );
     }
   };
 
@@ -81,8 +93,16 @@ const MyPlansPage = () => {
 
     if (type === "today") {
       setTodayWorkouts((prev) => prev.filter((workout) => workout.id !== id));
+
+      setContextAddWorkouts((prev) =>
+        prev.filter((workout) => workout.id !== id),
+      );
     } else {
       setSavedWorkouts((prev) => prev.filter((workout) => workout.id !== id));
+
+      setContextSavedWorkouts((prev) =>
+        prev.filter((workout) => workout.id !== id),
+      );
     }
   };
 
@@ -139,7 +159,7 @@ const MyPlansPage = () => {
             onChange={(e) => setSortBy(e.target.value)}
             className="select select-accent"
           >
-            <option value="default">Default</option>
+            <option disabled={true}>Sort by</option>
             <option value="Duration">Duration</option>
             <option value="Calories">Calories</option>
             <option value="Rating">Rating</option>
@@ -168,7 +188,10 @@ const MyPlansPage = () => {
                 Browse the library and add a lift to get more moving
               </p>
 
-              <Link href="/" className="btn btn-primary">
+              <Link
+                href="/"
+                className="btn btn-primary bg-[#CCFF00] text-black font-bold"
+              >
                 Go to Workouts
               </Link>
             </div>
@@ -282,7 +305,10 @@ const MyPlansPage = () => {
                 Your saved workouts will appear here
               </p>
 
-              <Link href="/" className="btn btn-primary">
+              <Link
+                href="/"
+                className="btn btn-primary bg-[#CCFF00] text-black font-bold"
+              >
                 Go to Workouts
               </Link>
             </div>
@@ -354,15 +380,6 @@ const MyPlansPage = () => {
                       View Details
                     </button>
                   </Link>
-
-                  {/* Mark Done */}
-                  <button
-                    onClick={() => handleDone(workout.id, "saved")}
-                    className="flex items-center gap-1 rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-600"
-                  >
-                    <MdDone />
-                    Mark As Done
-                  </button>
 
                   {/* Delete */}
                   <button

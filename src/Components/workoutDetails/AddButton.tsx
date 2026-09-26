@@ -1,4 +1,5 @@
 "use client";
+
 import { WorkoutContext } from "@/Context/WorkoutContext";
 import { IWorkout } from "@/Types/type";
 import React, { useContext } from "react";
@@ -11,8 +12,13 @@ const AddButton = ({ workout }: { workout: IWorkout }) => {
     setAddWorkouts: React.Dispatch<React.SetStateAction<IWorkout[]>>;
   };
 
+  const isAdded = AddWorkouts.some((item) => item.id === workout.id);
+
   const handleWorkout = () => {
-    setAddWorkouts([...AddWorkouts, workout]);
+    if (isAdded) return;
+
+    setAddWorkouts((prev) => [...prev, workout]);
+
     toast.success("Added Workout", {
       position: "bottom-right",
       autoClose: 5000,
@@ -25,13 +31,20 @@ const AddButton = ({ workout }: { workout: IWorkout }) => {
       transition: Bounce,
     });
   };
+
   return (
     <button
-      onClick={() => handleWorkout()}
-      className="btn mr-2 rounded-xl border-none bg-[#CCFF00] px-6 font-bold text-black shadow-lg hover:bg-[#d9ff4d]"
+      onClick={handleWorkout}
+      disabled={isAdded}
+      className={`btn mr-2 rounded-xl border-none px-6 font-bold shadow-lg ${
+        isAdded
+          ? "cursor-not-allowed bg-gray-500 text-gray-300"
+          : "bg-[#CCFF00] text-black hover:bg-[#d9ff4d]"
+      }`}
     >
       <MdAddCircleOutline />
-      Add to todays Plan
+
+      {isAdded ? "Added to Plan" : "Add to Today's Plan"}
     </button>
   );
 };
