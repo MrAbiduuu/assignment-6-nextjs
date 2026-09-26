@@ -1,8 +1,18 @@
+"use client";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
+import { WorkoutContext } from "@/Context/WorkoutContext";
+import { IWorkout } from "@/Types/type";
+import { useContext } from "react";
 
 const Navbar = () => {
+  const { AddWorkouts = [], SavedWorkouts = [] } = (useContext(
+    WorkoutContext,
+  ) ?? {}) as {
+    AddWorkouts?: IWorkout[];
+    SavedWorkouts?: IWorkout[];
+  };
   return (
     <nav className="border-b border-zinc-800">
       <div className="container mx-auto flex h-20 items-center justify-between px-5">
@@ -20,9 +30,19 @@ const Navbar = () => {
             My Plan
           </Link>
         </div>
-        <div className="flex gap-4">
-          <Link href="/my-plans">Plan</Link>
-          <Link href="/my-plans">Saved</Link>
+        <div className="flex gap-5">
+          <Link href="/my-plans">
+            Plan{"  "}
+            <span className="rounded-2xl text-black bg-amber-200 px-2">
+              {AddWorkouts.length}
+            </span>
+          </Link>
+          <Link href="/my-plans">
+            Saved{"  "}
+            <span className="rounded-2xl text-white border border-white px-2">
+              {SavedWorkouts.length}
+            </span>
+          </Link>
         </div>
       </div>
     </nav>

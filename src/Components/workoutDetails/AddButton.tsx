@@ -3,7 +3,7 @@ import { WorkoutContext } from "@/Context/WorkoutContext";
 import { IWorkout } from "@/Types/type";
 import React, { useContext } from "react";
 import { MdAddCircleOutline } from "react-icons/md";
-import { toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 const AddButton = ({ workout }: { workout: IWorkout }) => {
   const { AddWorkouts, setAddWorkouts } = useContext(WorkoutContext) as {
@@ -13,7 +13,17 @@ const AddButton = ({ workout }: { workout: IWorkout }) => {
 
   const handleWorkout = () => {
     setAddWorkouts([...AddWorkouts, workout]);
-    toast.success(`Added to your plan!`);
+    toast.success("Added Workout", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
   return (
     <button

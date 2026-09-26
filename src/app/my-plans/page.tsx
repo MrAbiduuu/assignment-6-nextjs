@@ -11,6 +11,7 @@ import { RxCross1 } from "react-icons/rx";
 import { IoMdStar, IoMdTime } from "react-icons/io";
 import { FaFire } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const MyPlansPage = () => {
   const { AddWorkouts = [], SavedWorkouts = [] } = (useContext(
@@ -46,7 +47,7 @@ const MyPlansPage = () => {
 
   // Mark as done
   const handleDone = (id: number, type: "today" | "saved") => {
-    alert("Work done good job");
+    toast.success("Exercise marked as done");
 
     if (type === "today") {
       setTodayWorkouts((prev) => prev.filter((workout) => workout.id !== id));
@@ -57,7 +58,7 @@ const MyPlansPage = () => {
 
   // Delete exercise
   const handleDelete = (id: number, type: "today" | "saved") => {
-    alert("Exercise deleted");
+    toast.error("Exercise deleted");
 
     if (type === "today") {
       setTodayWorkouts((prev) => prev.filter((workout) => workout.id !== id));

@@ -3,7 +3,7 @@ import { WorkoutContext } from "@/Context/WorkoutContext";
 import { IWorkout } from "@/Types/type";
 import React, { useContext } from "react";
 import { HiOutlineSave } from "react-icons/hi";
-import { toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 const SaveButton = ({ workout }: { workout: IWorkout }) => {
   const { SavedWorkouts = [], setSavedWorkouts = () => {} } = useContext(
@@ -15,7 +15,17 @@ const SaveButton = ({ workout }: { workout: IWorkout }) => {
 
   const handleSavedWorkout = () => {
     setSavedWorkouts([...SavedWorkouts, workout]);
-    toast.success(`Workout saved!`);
+    toast.success("Saved Workout", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
   return (
     <button
