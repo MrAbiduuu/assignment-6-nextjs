@@ -31,7 +31,7 @@ const WorkDetailsPage = async ({ params }: WorkoutDetailsPage) => {
             alt={workout.name}
             width={500}
             height={300}
-            className="h-full min-h-[600px] w-[500px] object-cover transition-transform duration-500 hover:scale-105"
+            className="h-full min-h-150 w-125 object-cover transition-transform duration-500 hover:scale-105"
           />
         </figure>
 
