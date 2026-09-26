@@ -11,6 +11,7 @@ import { RxCross1 } from "react-icons/rx";
 import { IoMdStar, IoMdTime } from "react-icons/io";
 import { FaFire } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
+
 import { toast } from "react-toastify";
 
 const MyPlansPage = () => {
@@ -22,6 +23,7 @@ const MyPlansPage = () => {
   };
 
   const [activeTab, setActiveTab] = useState("today");
+  const [sortBy, setSortBy] = useState("default");
 
   const [todayWorkouts, setTodayWorkouts] = useState<IWorkout[]>(
     () => AddWorkouts,
@@ -32,6 +34,23 @@ const MyPlansPage = () => {
   );
 
   const currentWorkouts = activeTab === "today" ? todayWorkouts : savedWorkouts;
+
+  // Sort workouts
+  const sortedWorkouts = [...currentWorkouts].sort((a, b) => {
+    if (sortBy === "Duration") {
+      return b.duration - a.duration;
+    }
+
+    if (sortBy === "Calories") {
+      return b.caloriesBurned - a.caloriesBurned;
+    }
+
+    if (sortBy === "Rating") {
+      return b.rating - a.rating;
+    }
+
+    return 0;
+  });
 
   // Total minutes
   const totalMinutes = currentWorkouts.reduce(
@@ -110,10 +129,27 @@ const MyPlansPage = () => {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="tabs tabs-border">
-        {/* ================= TODAY TAB ================= */}
+      {/* Sort By */}
+      <div>
+        <h1 className="flex justify-end text-white">Sort By</h1>
 
+        <div className="my-5 flex justify-end">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="select select-accent"
+          >
+            <option value="default">Default</option>
+            <option value="Duration">Duration</option>
+            <option value="Calories">Calories</option>
+            <option value="Rating">Rating</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="tabs tabs-boxed mb-10">
+        {/* ================= TODAY TAB ================= */}
         <input
           type="radio"
           name="my_tabs_2"
@@ -137,7 +173,7 @@ const MyPlansPage = () => {
               </Link>
             </div>
           ) : (
-            todayWorkouts.map((workout: IWorkout, index: number) => (
+            sortedWorkouts.map((workout: IWorkout, index: number) => (
               <div
                 key={workout.id ?? index}
                 className="mb-4 flex items-center gap-5 rounded-2xl border border-white/10 bg-[#191c23] p-5 shadow-lg transition-all duration-300 hover:border-white/20 hover:shadow-xl"
@@ -228,7 +264,6 @@ const MyPlansPage = () => {
         </div>
 
         {/* ================= SAVED TAB ================= */}
-
         <input
           type="radio"
           name="my_tabs_2"
@@ -252,7 +287,7 @@ const MyPlansPage = () => {
               </Link>
             </div>
           ) : (
-            savedWorkouts.map((workout: IWorkout, index: number) => (
+            sortedWorkouts.map((workout: IWorkout, index: number) => (
               <div
                 key={workout.id ?? index}
                 className="mb-4 flex items-center gap-5 rounded-2xl border border-white/10 bg-[#191c23] p-5 shadow-lg transition-all duration-300 hover:border-white/20 hover:shadow-xl"
