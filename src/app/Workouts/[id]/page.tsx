@@ -3,8 +3,6 @@ import SaveButton from "@/Components/workoutDetails/SaveButton";
 import { IWorkout } from "@/Types/type";
 import Image from "next/image";
 import React from "react";
-import { HiOutlineSave } from "react-icons/hi";
-import { MdAddCircleOutline } from "react-icons/md";
 
 interface WorkoutDetailsPage {
   params: Promise<{

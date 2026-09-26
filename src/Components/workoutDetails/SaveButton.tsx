@@ -6,10 +6,16 @@ import { HiOutlineSave } from "react-icons/hi";
 import { toast } from "react-toastify";
 
 const SaveButton = ({ workout }: { workout: IWorkout }) => {
-  const { SavedWorkouts, setSavedWorkouts } = useContext(WorkoutContext);
+  const { SavedWorkouts = [], setSavedWorkouts = () => {} } = useContext(
+    WorkoutContext,
+  ) as {
+    SavedWorkouts: IWorkout[];
+    setSavedWorkouts: React.Dispatch<React.SetStateAction<IWorkout[]>>;
+  };
+
   const handleSavedWorkout = () => {
     setSavedWorkouts([...SavedWorkouts, workout]);
-    toast.success(`${workout.name} has been added to your saved workouts!`);
+    toast.success(`Workout saved!`);
   };
   return (
     <button

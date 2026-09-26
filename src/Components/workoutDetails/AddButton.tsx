@@ -6,10 +6,14 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const AddButton = ({ workout }: { workout: IWorkout }) => {
-  const { AddWorkouts, setAddWorkouts } = useContext(WorkoutContext);
+  const { AddWorkouts, setAddWorkouts } = useContext(WorkoutContext) as {
+    AddWorkouts: IWorkout[];
+    setAddWorkouts: React.Dispatch<React.SetStateAction<IWorkout[]>>;
+  };
+
   const handleWorkout = () => {
     setAddWorkouts([...AddWorkouts, workout]);
-    toast.success(`${workout.name} has been added to your plan!`);
+    toast.success(`Added to your plan!`);
   };
   return (
     <button
